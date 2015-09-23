@@ -3,8 +3,11 @@
 }
 
 
-table, th, td {
-   border: 3px solid green ;
+th, td {
+   border: 3px solid green;
+   text-align: center;
+   vertical-align: middle;
+   font: 50px red; 
 }
 
 th, td{
