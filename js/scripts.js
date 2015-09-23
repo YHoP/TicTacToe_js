@@ -21,32 +21,38 @@ Space.prototype.y_coordinate = function() {
   return this.y_coordinate;
 }
 
-
 Space.prototype.markBy = function(player) {
   this.markedBy = player;
 }
 
-$(document).ready(function() {
+function currentPlayer(player){
 
+}
+
+$(document).ready(function() {
   var player1;
   var player2;
+  var currentMark;
 
   $("#mark_X").click(function() {
-    player1 = Player("X");
-    player2 = Player("O");
+    player1 = new Player("X");
+    player2 = new Player("O");
     $(".chooseMark").hide();
+    currentMark = player1.mark;
   });
 
 
   $("#mark_O").click(function() {
-    player1 = Player("O");
-    player2 = Player("X");
+    player1 = new Player("O");
+    player2 = new Player("X");
     $(".chooseMark").hide();
+    currentMark = player1.mark;
   });
 
 
-  $("td").last().click(function(){
-    $(".mark").append("X");
+  $("td#1_1").click(function(){
+    $("#1_1 .mark").text(currentMark);
+    currentMark = player2.mark;
   });
 
 
