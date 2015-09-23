@@ -1,4 +1,8 @@
+
 var playerArray = [];
+var player1Moves = [];
+var player1Moves = [];
+
 
 function Player(mark) {
   this.mark = mark;
@@ -6,7 +10,6 @@ function Player(mark) {
 
 Player.prototype.mark = function() {
   return this.mark;
-  // console.log("this mark :" + this.mark);
 }
 
 function Space(x_coordinate, y_coordinate) {
@@ -37,18 +40,21 @@ function initGrid() {
   }
 }
 
-function toggleMark(currentMark) {
-  if(currentMark === playerArray[0].mark){
-    currentMark = playerArray[1].mark;
+function togglePlayer(player) {
+  if(player == playerArray[0]){
+    player = playerArray[1];
   } else {
-    currentMark = playerArray[0].mark;
+    player = playerArray[0];
   }
+  return player;
 }
 
+
 $(document).ready(function() {
+
   var player1;
   var player2;
-  var currentMark;
+  var currentPlayer;
 
   $("#mark_X").click(function() {
     player1 = new Player("X");
@@ -56,8 +62,7 @@ $(document).ready(function() {
     playerArray.push(player1);
     playerArray.push(player2);
     $(".chooseMark").hide();
-    currentMark = player1.mark;
-    console.log(currentMark);
+    currentPlayer = player1;
   });
 
 
@@ -67,25 +72,57 @@ $(document).ready(function() {
     playerArray.push(player1);
     playerArray.push(player2);
     $(".chooseMark").hide();
-    currentMark = player1.mark;
-    console.log(currentMark);
+    currentPlayer = player1;
   });
 
   initGrid();
 
 
-  $("#1_1").on( "click", function() {
-    // console.log($(this));
-    $("#1_1 .mark").text(currentMark);
-    toggleMark(currentMark);
+  $("#1_1").click(function() {
+    $("#1_1 .mark").text(currentPlayer.mark);
+    currentPlayer = togglePlayer(currentPlayer);
   });
 
+  $("#1_2").click(function() {
+    $("#1_2 .mark").text(currentPlayer.mark);
+    currentPlayer = togglePlayer(currentPlayer);
+  });
+
+  $("#1_3").click(function() {
+    $("#1_3 .mark").text(currentPlayer.mark);
+    currentPlayer = togglePlayer(currentPlayer);
+  });
+
+  $("#2_1").click(function() {
+    $("#2_1 .mark").text(currentPlayer.mark);
+    currentPlayer = togglePlayer(currentPlayer);
+  });
 
   $("#2_2").click(function() {
-    $("#2_2 .mark").text(currentMark);
-    toggleMark(currentMark);
-    console.log(currentMark);
+    $("#2_2 .mark").text(currentPlayer.mark);
+    currentPlayer = togglePlayer(currentPlayer);
   });
+
+  $("#2_3").click(function() {
+    $("#2_3 .mark").text(currentPlayer.mark);
+    currentPlayer = togglePlayer(currentPlayer);
+  });
+
+  $("#3_1").click(function() {
+    $("#3_1 .mark").text(currentPlayer.mark);
+    currentPlayer = togglePlayer(currentPlayer);
+  });
+
+  $("#3_2").click(function() {
+    $("#3_2 .mark").text(currentPlayer.mark);
+    currentPlayer = togglePlayer(currentPlayer);
+  });
+
+  $("#3_3").click(function() {
+    $("#3_3 .mark").text(currentPlayer.mark);
+    currentPlayer = togglePlayer(currentPlayer);
+  });
+
 
 
 }); // end of document

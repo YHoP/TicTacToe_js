@@ -2,15 +2,19 @@
   display: block;
 }
 
+table {
+    border-collapse: collapse;
+}
 
-th, td {
+table, td {
    border: 3px solid green;
    text-align: center;
    vertical-align: middle;
-   font: 50px red; 
+   font-size: 50px;
+   color: red;
 }
 
-th, td{
+td{
   width: 100px;
   height: 100px;
 }
