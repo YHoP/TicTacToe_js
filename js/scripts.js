@@ -1,29 +1,34 @@
 var playerArray = [];
-var winningArray = [ ["1_1", "1_2", "1_3"], ["2_1", "2_2", "2_3"], ["3_1", "3_2", "3_3"], ["1_1", "2_1", "3_1"], ["1_2", "2_2", "3_2"], ["1_3", "2_3", "3_3"], ["1_1", "2_2", "3_3"], ["3_1", "2_2", "1_3"] ];
 
-function isWinning(player){
-  var isMatch = [false, false, false];
-  for (var i = 0; i < winningArray.length; i++){
-    for (var j = 0; j < winningArray[i].length; j++){
-      for (var k = 0; k < player.moves.length; j++){
-        if(winningArray[j] ===  playerArray[k]){
-          isMatch[j] = true;
-        }
-      }
-
-      if(isMatch === [true, true, true]){
-        return true;
-      }else {
-        return false;
-      }
-    }
+function isWinning (player, allSpaces){
+  var isWin = false;
+  if (allSpaces[0].markedBy === player && allSpaces[1].markedBy === player && allSpaces[2].markedBy === player){
+    isWin = true;
+  } else if (allSpaces[3].markedBy === player && allSpaces[4].markedBy === player && allSpaces[5].markedBy === player){
+    isWin = true;
+  } else if (allSpaces[6].markedBy === player && allSpaces[7].markedBy === player && allSpaces[8].markedBy === player){
+    isWin = true;
+  } else if (allSpaces[1].markedBy === player && allSpaces[4].markedBy === player && allSpaces[8].markedBy === player){
+    isWin = true;
+  } else if (allSpaces[2].markedBy === player && allSpaces[4].markedBy === player && allSpaces[6].markedBy === player){
+    isWin = true;
+  } else if (allSpaces[0].markedBy === player && allSpaces[3].markedBy === player && allSpaces[6].markedBy === player){
+    isWin = true;
+  } else if (allSpaces[1].markedBy === player && allSpaces[4].markedBy === player && allSpaces[7].markedBy === player){
+    isWin = true;
+  } else if (allSpaces[2].markedBy === player && allSpaces[5].markedBy === player && allSpaces[8].markedBy === player){
+    isWin = true;
+  } else {
+    isWin = false;
   }
+
+  return isWin;
 }
+
 
 
 function Player(mark) {
   this.mark = mark;
-  this.moves = [];
 }
 
 Player.prototype.mark = function() {
@@ -63,11 +68,10 @@ function set9Spaces (){
   return allSpaces;
 }
 
-function currentSpace(x, y, allSpaces) {
-  var thisSpace;
+function findCurrentSpace(x, y, allSpaces) {
   for (var i in allSpaces){
     if (allSpaces[i].x_coordinate == x && allSpaces[i].y_coordinate == y){
-      thisSpace = allSpaces[i];
+      var thisSpace = allSpaces[i];
     }
   }
   return thisSpace;
@@ -95,25 +99,13 @@ function togglePlayer(player) {
   return player;
 }
 
-// function initClicks(currentPlayer) {
-//   for (var x = 1; x <= 3; x++) {
-//     for (var y = 1; y <= 3; y++) {
-//       $("#" + x + "_" + y).click(function() {
-//         $("#" + x + "_" + y + " .mark").text(currentPlayer.mark);
-//         currentPlayer = togglePlayer(currentPlayer);
-//       });
-//     }
-//   }
-// } // not working =(
-
-
-
 
 $(document).ready(function() {
 
   var player1;
   var player2;
   var currentPlayer;
+  $("#grid").hide();
 
   $("#mark_X").click(function() {
     player1 = new Player("X");
@@ -121,6 +113,7 @@ $(document).ready(function() {
     playerArray.push(player1);
     playerArray.push(player2);
     $(".chooseMark").hide();
+    $("#grid").show();
     currentPlayer = player1;
   });
 
@@ -131,36 +124,30 @@ $(document).ready(function() {
     playerArray.push(player1);
     playerArray.push(player2);
     $(".chooseMark").hide();
+    $("#grid").show();
     currentPlayer = player1;
   });
 
   initGrid();
   var allSpaces = set9Spaces();
 
-  // initClicks(currentPlayer);
-
   $(".space").click(function() {
-    // currentPlayer.moves.push($(this).attr('id'));
     var x = $(this).parent().attr('id');
     var y = $(this).attr('id');
-    console.log("tr id = " + x);
-    console.log("td id = " + y);
 
-    var thisSpace = currentSpace(x, y, allSpaces);
-    console.log("td space = " + thisSpace);
+    var thisSpace = findCurrentSpace(x, y, allSpaces);
     if (thisSpace.markedBy === undefined){
       thisSpace.markBy(currentPlayer);
-      currentPlayer.moves.push(thisSpace);
-      console.log(currentPlayer.moves);
-
       $(this).text(currentPlayer.mark);
+
+      if ( isWinning(currentPlayer, allSpaces) ){
+        $(".win").text(currentPlayer.mark + " Win!");
+      }
+
       currentPlayer = togglePlayer(currentPlayer);
       $(".whichTurn").text(currentPlayer.mark + "\'s turn");
-    }
 
-    // if(isWinning(currentPlayer)){
-    //   $(".win").text(currentPlayer.mark + " win!")
-    // }
+    } // end of if
 
   });
 

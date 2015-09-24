@@ -22,3 +22,7 @@ td{
 span .mark {
   color: white;
 }
+
+.win {
+  color: red;
+}
