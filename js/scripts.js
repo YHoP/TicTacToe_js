@@ -105,6 +105,7 @@ $(document).ready(function() {
   var player1;
   var player2;
   var currentPlayer;
+  initGrid();
   $("#grid").hide();
 
   $("#mark_X").click(function() {
@@ -128,7 +129,6 @@ $(document).ready(function() {
     currentPlayer = player1;
   });
 
-  initGrid();
   var allSpaces = set9Spaces();
 
   $(".space").click(function() {
@@ -142,6 +142,7 @@ $(document).ready(function() {
 
       if ( isWinning(currentPlayer, allSpaces) ){
         $(".win").text(currentPlayer.mark + " Win!");
+        $("#grid").click(false);
       }
 
       currentPlayer = togglePlayer(currentPlayer);
