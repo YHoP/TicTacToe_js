@@ -52,14 +52,37 @@ Space.prototype.markBy = function(player) {
   this.markedBy = player;
 }
 
-function initGrid() {
-  for(var i = 1; i <=3; i++){
-    $("#grid").append("<tr>");
-    for(var j = 1; j<=3; j++){
-      $("#grid").append("<td id='"+ i + "_" + j + "'><span class='mark'></span></td>");
+function set9Speaces (){
+  var allSpaces = [];
+  for (var x = 1; x <= 3; x++){
+    for (var y = 1; y <= 3; y++){
+      var newSpace = new Space(x, y);
+      allSpaces.push(newSpace);
     }
-    $("#grid").append("</tr>");
   }
+  return allSpaces;
+}
+
+function currentSpace(x, y, allSpaces) {
+  var thisSpace;
+  for (var i in allSpaces){
+    if (allSpaces[i].x_coordinate == x && allSpaces[i].y_coordinate == y){
+      thisSpace = allSpaces[i];
+    }
+  }
+  return thisSpace;
+}
+
+function initGrid() {
+  var text;
+  for(var x = 1; x <=3; x++){
+    text += "<tr id='"+ x +"'>";
+    for(var y = 1; y<=3; y++){
+      text += "<td class='space' id='" + y + "'><span class='mark'></span></td>";
+    }
+    text += "</tr>";
+  }
+  $("#grid").append(text);
 }
 
 
@@ -112,75 +135,30 @@ $(document).ready(function() {
   });
 
   initGrid();
+  var allSpaces = set9Speaces();
 
   // initClicks(currentPlayer);
 
-  $("#1_1").click(function() {
+  $(".space").click(function() {
     currentPlayer.moves.push($(this).attr('id'));
+    var x = $(this).parent().attr('id');
+    var y = $(this).attr('id');
+
+    var thisSpace = currentSpace(x, y, allSpaces);
+    if (thisSpace.markedBy === undefined){
+      thisSpace.markBy(currentPlayer);
+      currentPlayer.moves.push(thisSpace);
+      console.log(currentPlayer.moves);
+      $(this).text(currentPlayer.mark);
+      currentPlayer = togglePlayer(currentPlayer);
+      $(".whichTurn").text(currentPlayer.mark + "\'s turn");
+    }
+
     // if(isWinning(currentPlayer)){
     //   $(".win").text(currentPlayer.mark + " win!")
     // }
-    $("#1_1 .mark").text(currentPlayer.mark);
-    currentPlayer = togglePlayer(currentPlayer);
-    $(".whichTurn").text(currentPlayer.mark + "\'s turn");
-  });
 
-  $("#1_2").click(function() {
-    currentPlayer.moves.push($(this).attr('id'));
-    $("#1_2 .mark").text(currentPlayer.mark);
-    currentPlayer = togglePlayer(currentPlayer);
-    $(".whichTurn").text(currentPlayer.mark + "\'s turn");
   });
-
-  $("#1_3").click(function() {
-    currentPlayer.moves.push($(this).attr('id'));
-    $("#1_3 .mark").text(currentPlayer.mark);
-    currentPlayer = togglePlayer(currentPlayer);
-    $(".whichTurn").text(currentPlayer.mark + "\'s turn");
-  });
-
-  $("#2_1").click(function() {
-    currentPlayer.moves.push($(this).attr('id'));
-    $("#2_1 .mark").text(currentPlayer.mark);
-    currentPlayer = togglePlayer(currentPlayer);
-    $(".whichTurn").text(currentPlayer.mark + "\'s turn");
-  });
-
-  $("#2_2").click(function() {
-    currentPlayer.moves.push($(this).attr('id'));
-    $("#2_2 .mark").text(currentPlayer.mark);
-    currentPlayer = togglePlayer(currentPlayer);
-    $(".whichTurn").text(currentPlayer.mark + "\'s turn");
-  });
-
-  $("#2_3").click(function() {
-    currentPlayer.moves.push($(this).attr('id'));
-    $("#2_3 .mark").text(currentPlayer.mark);
-    currentPlayer = togglePlayer(currentPlayer);
-    $(".whichTurn").text(currentPlayer.mark + "\'s turn");
-  });
-
-  $("#3_1").click(function() {
-    currentPlayer.moves.push($(this).attr('id'));
-    $("#3_1 .mark").text(currentPlayer.mark);
-    currentPlayer = togglePlayer(currentPlayer);
-    $(".whichTurn").text(currentPlayer.mark + "\'s turn");
-  });
-
-  $("#3_2").click(function() {
-    currentPlayer.moves.push($(this).attr('id'));
-    $("#3_2 .mark").text(currentPlayer.mark);
-    currentPlayer = togglePlayer(currentPlayer);
-    $(".whichTurn").text(currentPlayer.mark + "\'s turn");
-  });
-
-  $("#3_3").click(function() {
-    currentPlayer.moves.push($(this).attr('id'));
-    $("#3_3 .mark").text(currentPlayer.mark);
-    currentPlayer = togglePlayer(currentPlayer);
-    $(".whichTurn").text(currentPlayer.mark + "\'s turn");
-  });
-
 
 
 }); // end of document
