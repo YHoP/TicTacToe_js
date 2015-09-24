@@ -142,7 +142,7 @@ $(document).ready(function() {
 
       if ( isWinning(currentPlayer, allSpaces) ){
         $(".win").text(currentPlayer.mark + " Win!");
-        $("#grid").click(false);
+        $(".whichTurn").hide();
       }
 
       currentPlayer = togglePlayer(currentPlayer);
