@@ -19,7 +19,7 @@ describe('Space', function() {
 
 describe('markedBy', function() {
 	it("lets a player mark a space", function() {
-		
+
 			var testPlayer = new Player("X");
 			console.log(testPlayer);
 			var testSpace = new Space(1,2);

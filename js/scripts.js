@@ -52,7 +52,7 @@ Space.prototype.markBy = function(player) {
   this.markedBy = player;
 }
 
-function set9Speaces (){
+function set9Spaces (){
   var allSpaces = [];
   for (var x = 1; x <= 3; x++){
     for (var y = 1; y <= 3; y++){
@@ -135,20 +135,24 @@ $(document).ready(function() {
   });
 
   initGrid();
-  var allSpaces = set9Speaces();
+  var allSpaces = set9Spaces();
 
   // initClicks(currentPlayer);
 
   $(".space").click(function() {
-    currentPlayer.moves.push($(this).attr('id'));
+    // currentPlayer.moves.push($(this).attr('id'));
     var x = $(this).parent().attr('id');
     var y = $(this).attr('id');
+    console.log("tr id = " + x);
+    console.log("td id = " + y);
 
     var thisSpace = currentSpace(x, y, allSpaces);
+    console.log("td space = " + thisSpace);
     if (thisSpace.markedBy === undefined){
       thisSpace.markBy(currentPlayer);
       currentPlayer.moves.push(thisSpace);
       console.log(currentPlayer.moves);
+
       $(this).text(currentPlayer.mark);
       currentPlayer = togglePlayer(currentPlayer);
       $(".whichTurn").text(currentPlayer.mark + "\'s turn");
